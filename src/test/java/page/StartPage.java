@@ -38,6 +38,10 @@ public class StartPage {
         paymentOkWindow.waitUntil(Condition.visible, 15000);
     }
 
+    public void failureMessage() {
+        paymentErrorWindow.waitUntil(Condition.visible, 15000);
+    }
+
     public BuyPage buyPage() {
         buyButton.click();
         return new BuyPage();

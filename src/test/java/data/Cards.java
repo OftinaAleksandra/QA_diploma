@@ -50,11 +50,19 @@ public class Cards {
     }
 
     public static Cards getApprovedCards () {
-         return new Cards (approvedCardNumber(),
-                 getMonthNumber(),
-                 getYear(),
-                 owner(),
-                 getCvcCvv());
+        return new Cards (approvedCardNumber(),
+                getMonthNumber(),
+                getYear(),
+                owner(),
+                getCvcCvv());
+    }
+
+    public static Cards getDeclinedCards () {
+        return new Cards (declinedCardNumber(),
+                getMonthNumber(),
+                getYear(),
+                owner(),
+                getCvcCvv());
     }
 }
 
