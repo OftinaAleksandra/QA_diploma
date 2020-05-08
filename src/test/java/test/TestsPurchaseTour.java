@@ -44,7 +44,7 @@ public class TestsPurchaseTour {
         startPage.validBuyTour(approvedCard);
         startPage.assertSuccessfulPurchaseMessage();
         assertEquals(SqlHelper.getStatusPurchase(), "APPROVED");
-        assertEquals(SqlHelper.getDataFromOrderEntity().getPaymentId(), SqlHelper.getTransactionIdFromPaymentEntity());
+        assertEquals(SqlHelper.getDataFromOrderEntity().getPayment_id(), SqlHelper.getTransactionIdFromPaymentEntity());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class TestsPurchaseTour {
         startPage.assertNotSuccessfulPurchaseMessage();
         startPage.assertMessageOfIncorrectInputMonth("Неверный формат");
         assertEquals(SqlHelper.getStatusPurchase(), "DECLINED");
-        assertEquals(SqlHelper.getDataFromOrderEntity().getPaymentId(), SqlHelper.getTransactionIdFromPaymentEntity());
+        assertEquals(SqlHelper.getDataFromOrderEntity().getPayment_id(), SqlHelper.getTransactionIdFromPaymentEntity());
     }
 
     @Test
@@ -198,7 +198,8 @@ public class TestsPurchaseTour {
         startPage.validBuyTour(approvedCard);
         startPage.assertSuccessfulPurchaseMessage();
         assertEquals(SqlHelper.getStatusPurchaseByCredit(), "APPROVED");
-        assertEquals(SqlHelper.getDataFromOrderEntity().getCreditId(), SqlHelper.getBankIdFromPaymentEntity());    }
+        assertEquals(SqlHelper.getBankIdFromPaymentEntity(), SqlHelper.getDataFromOrderEntity().getCredit_id());
+    }
 
     @Test
     @DisplayName("15. Покупка тура в кредит с невалидными данными")
@@ -209,7 +210,7 @@ public class TestsPurchaseTour {
         startPage.validBuyTour(approvedCard);
         startPage.assertNotSuccessfulPurchaseMessage();
         assertEquals(SqlHelper.getStatusPurchaseByCredit(), "DECLINED");
-        assertEquals(SqlHelper.getDataFromOrderEntity().getCreditId(), SqlHelper.getBankIdFromPaymentEntity());
+        assertEquals(SqlHelper.getDataFromOrderEntity().getCredit_id(), SqlHelper.getBankIdFromPaymentEntity());
 }
 
     @Test

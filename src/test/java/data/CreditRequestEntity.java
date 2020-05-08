@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CreditRequestEntity {
     private String id;
-    private String bankId;
+    private String bank_id;
     private String created;
     private String status;
 }
+

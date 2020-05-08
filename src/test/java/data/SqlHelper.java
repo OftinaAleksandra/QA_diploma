@@ -3,7 +3,6 @@ package data;
 import lombok.Value;
 import lombok.val;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import java.sql.DriverManager;
@@ -29,9 +28,9 @@ public class SqlHelper {
         QueryRunner runner = new QueryRunner();
         try (val conn = DriverManager.getConnection(url, user, password);
         ) {
-            val selectStatus = "SELECT transaction_id FROM payment_entity ORDER BY created DESC LIMIT 1;";
-            val status = runner.query(conn, selectStatus, new BeanHandler<>(PaymentEntity.class));
-            return status.getTransactionId();
+            val selectSql = "SELECT transaction_id FROM payment_entity ORDER BY created DESC LIMIT 1;";
+            val status = runner.query(conn, selectSql, new BeanHandler<>(PaymentEntity.class));
+            return status.getTransaction_id();
         }
     }
 
@@ -39,11 +38,8 @@ public class SqlHelper {
         QueryRunner runner = new QueryRunner();
         try (val conn = DriverManager.getConnection(url, user, password);
         ) {
-            val selectOrderEntity = "SELECT payment_id, credit_id FROM order_entity ORDER BY created DESC LIMIT 1;";
-            ResultSetHandler<OrderEntity> resultHandlerOrder =
-                    new BeanHandler<OrderEntity>(OrderEntity.class);
-            val orderEntity = runner.query(conn, selectOrderEntity, resultHandlerOrder);
-            return orderEntity;
+            val selectOrderEntity = "SELECT payment_id, credit_id FROM order_entity  LIMIT 1;";
+            return runner.query(conn, selectOrderEntity, new BeanHandler<OrderEntity>(OrderEntity.class));
         }
     }
 
@@ -63,7 +59,7 @@ public class SqlHelper {
         ) {
             val selectStatus = "SELECT bank_id FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
             val status = runner.query(conn, selectStatus, new BeanHandler<>(CreditRequestEntity.class));
-            return status.getBankId();
+            return status.getBank_id();
         }
     }
 

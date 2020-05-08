@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public class OrderEntity {
         private String id;
         private String created;
-        private String creditId;
-        private String paymentId;
+        private String credit_id;
+        private String payment_id;
     }
 

@@ -10,5 +10,5 @@ public class PaymentEntity {
     private String amount;
     private String created;
     private String status;
-    private String transactionId;
+    private String transaction_id;
 }
