@@ -11,7 +11,7 @@ import java.util.Random;
 
 @Data
 @AllArgsConstructor
-public class Cards {
+public class CardInfo {
     public String number;
     public String month;
     public String year;
@@ -49,16 +49,16 @@ public class Cards {
         return String.valueOf(faker.number().numberBetween(100,999));
     }
 
-    public static Cards getApprovedCards () {
-        return new Cards (approvedCardNumber(),
+    public static CardInfo getApprovedCard() {
+        return new CardInfo(approvedCardNumber(),
                 getMonthNumber(),
                 getYear(),
                 owner(),
                 getCvcCvv());
     }
 
-    public static Cards getDeclinedCards () {
-        return new Cards (declinedCardNumber(),
+    public static CardInfo getDeclinedCard() {
+        return new CardInfo(declinedCardNumber(),
                 getMonthNumber(),
                 getYear(),
                 owner(),

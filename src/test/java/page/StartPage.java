@@ -3,10 +3,9 @@ package page;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import data.Cards;
+import data.CardInfo;
 
 import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -31,9 +30,8 @@ public class StartPage {
 
     SelenideElement paymentOkWindow = $(".notification_status_ok");
     SelenideElement paymentErrorWindow = $(".notification_status_error");
-    //SelenideElement inputError = $(".input_invalid");
 
-    public StartPage validBuyTour(Cards card) {
+    public StartPage validBuyTour(CardInfo card) {
         numberCardField.setValue(card.number);
         monthField.setValue(card.month);
         yearField.setValue(card.year);
@@ -43,44 +41,41 @@ public class StartPage {
         return new StartPage();
     }
 
-
-    public BuyPage buyPage() {
+    public BuyPage goToBuyPage() {
         buyButton.click();
         return new BuyPage();
     }
 
-    public CreditPage creditPage() {
+    public CreditPage goToCreditPage() {
         creditButton.click();
         return new CreditPage();
     }
 
-    public void messageOfSuccessBuy() {
+    public void assertSuccessfulPurchaseMessage() {
         paymentOkWindow.waitUntil(Condition.visible, 15000);
     }
 
-    public void failureMessage() {
+    public void assertNotSuccessfulPurchaseMessage() {
         paymentErrorWindow.waitUntil(Condition.visible, 15000);
     }
 
-    public void messageOfIncorrectInputCard(String message) {
+    public void assertMessageOfIncorrectInputCard(String message) {
         cardNumberInputSub.shouldHave(exactText(message));
     }
 
-    public void messageOfIncorrectInputMonth(String message) {
+    public void assertMessageOfIncorrectInputMonth(String message) {
         monthInputSub.shouldHave(exactText(message));
     }
 
-    public void messageOfIncorrectInputYear(String message) {
+    public void assertMessageOfIncorrectInputYear(String message) {
         yearInputSub.shouldHave(exactText(message));
     }
 
-    public void messageOfIncorrectInputCVC(String message) {
+    public void assertMessageOfIncorrectInputCVC(String message) {
         cvcInputSub.shouldHave(exactText(message));
     }
 
-
-
-    public void messageOfIncorrectInputHolder(String message) {
+    public void assertMessageOfIncorrectInputHolder(String message) {
         holderInputSub.shouldHave(exactText(message));
     }
 }

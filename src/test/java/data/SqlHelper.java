@@ -3,6 +3,7 @@ package data;
 import lombok.Value;
 import lombok.val;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import java.sql.DriverManager;
@@ -16,7 +17,7 @@ public class SqlHelper {
 
     public static String getStatusPurchase() throws SQLException {
         QueryRunner runner = new QueryRunner();
-        try ( val conn = DriverManager.getConnection(url,user, password );
+        try (val conn = DriverManager.getConnection(url, user, password);
         ) {
             val selectStatus = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1;";
             val status = runner.query(conn, selectStatus, new BeanHandler<>(PaymentEntity.class));
@@ -24,9 +25,31 @@ public class SqlHelper {
         }
     }
 
+    public static String getTransactionIdFromPaymentEntity() throws SQLException {
+        QueryRunner runner = new QueryRunner();
+        try (val conn = DriverManager.getConnection(url, user, password);
+        ) {
+            val selectStatus = "SELECT transaction_id FROM payment_entity ORDER BY created DESC LIMIT 1;";
+            val status = runner.query(conn, selectStatus, new BeanHandler<>(PaymentEntity.class));
+            return status.getTransactionId();
+        }
+    }
+
+    public static OrderEntity getDataFromOrderEntity() throws SQLException {
+        QueryRunner runner = new QueryRunner();
+        try (val conn = DriverManager.getConnection(url, user, password);
+        ) {
+            val selectOrderEntity = "SELECT payment_id, credit_id FROM order_entity ORDER BY created DESC LIMIT 1;";
+            ResultSetHandler<OrderEntity> resultHandlerOrder =
+                    new BeanHandler<OrderEntity>(OrderEntity.class);
+            val orderEntity = runner.query(conn, selectOrderEntity, resultHandlerOrder);
+            return orderEntity;
+        }
+    }
+
     public static String getStatusPurchaseByCredit() throws SQLException {
         QueryRunner runner = new QueryRunner();
-        try ( val conn = DriverManager.getConnection(url,user, password );
+        try (val conn = DriverManager.getConnection(url, user, password);
         ) {
             val selectStatus = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
             val status = runner.query(conn, selectStatus, new BeanHandler<>(CreditRequestEntity.class));
@@ -34,10 +57,20 @@ public class SqlHelper {
         }
     }
 
+    public static String getBankIdFromPaymentEntity() throws SQLException {
+        QueryRunner runner = new QueryRunner();
+        try (val conn = DriverManager.getConnection(url, user, password);
+        ) {
+            val selectStatus = "SELECT bank_id FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
+            val status = runner.query(conn, selectStatus, new BeanHandler<>(CreditRequestEntity.class));
+            return status.getBankId();
+        }
+    }
+
     public static void clearDBTables() throws SQLException {
         val runner = new QueryRunner();
-        try  ( val conn = DriverManager.getConnection( url,user, password );
-        ){
+        try (val conn = DriverManager.getConnection(url, user, password);
+        ) {
             runner.update(conn, "DELETE  FROM credit_request_entity;");
             runner.update(conn, "DELETE  FROM payment_entity;");
             runner.update(conn, "DELETE  FROM order_entity;");
