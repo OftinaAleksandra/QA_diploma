@@ -9,7 +9,6 @@ db:
   ports:
     - '5432:5432'
 nodejs:
-  image: node-app:1.0
   build: ./gate-simulator
   ports:
     - '9999:9999'
