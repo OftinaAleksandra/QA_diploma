@@ -2,7 +2,7 @@
 
 Для запуска в MySQL:
 1. Запустить  docker-machine start default
-2. В терминале InteliJ Idea выполнить команду: docker-compose -f docker-compose-mysql.yml up –d
+2. В терминале InteliJ Idea выполнить команду: docker-compose -f docker-compose-mysql.yml up -d
 3. Запустить SUT командой: java -jar artifacts/aqa-shop.jar -P:jdbc.url=jdbc:mysql://192.168.99.100:3306/app -P:jdbc.user=app -P:jdbc.password=pass
 4. Запустить тесты командой: gradlew test
 5. Остановить машину: docker-machine stop default
